@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ifat Bhangwar | Full Stack Developer</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  scroll-behavior:smooth;
+}
+
+:root{
+  --bg-primary: #f8fafc;
+  --bg-secondary: #e2e8f0;
+  --bg-card: rgba(255, 255, 255, 0.8);
+  --text-primary: #1e293b;
+  --text-secondary: #475569;
+  --accent-color: #6366f1;
+  --accent-gradient: linear-gradient(45deg, #6366f1, #8b5cf6, #a855f7);
+  --border-color: rgba(148, 163, 184, 0.2);
+  --shadow-light: rgba(0, 0, 0, 0.05);
+  --shadow-medium: rgba(0, 0, 0, 0.1);
+  --shadow-heavy: rgba(0, 0, 0, 0.15);
+}
+
+[data-theme="dark"]{
+  --bg-primary: #0a0a0a;
+  --bg-secondary: #1a1a2e;
+  --bg-card: rgba(15, 23, 42, 0.6);
+  --text-primary: #f8fafc;
+  --text-secondary: #cbd5f1;
+  --accent-color: #3b82f6;
+  --accent-gradient: linear-gradient(45deg, #3b82f6, #a855f7, #ec4899);
+  --border-color: rgba(59, 130, 246, 0.2);
+  --shadow-light: rgba(0, 0, 0, 0.2);
+  --shadow-medium: rgba(0, 0, 0, 0.3);
+  --shadow-heavy: rgba(0, 0, 0, 0.4);
+}
+
+body{
+  font-family: 'Inter', sans-serif;
+  background: var(--bg-primary);
+  background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+  color: var(--text-primary);
+  line-height: 1.6;
+  overflow-x: hidden;
+  transition: all 0.3s ease;
+}
+
+.theme-toggle{
+  position:fixed;
+  top: 20px;
+  right: 20px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 1001;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px var(--shadow-light);
+}
+
+.theme-toggle:hover{
+  transform: scale(1.1);
+  box-shadow: 0 6px 20px var(--shadow-medium);
+}
+
+.theme-toggle i{
+  font-size: 20px;
+  color: var(--accent-color);
+  transition: all 0.3s ease;
+}
+
+[data-theme="light"] .fa-moon{
+  display: none;
+}
+
+[data-theme="dark"] .fa-sun{
+  display: none;
+}
+
+@keyframes fadeInUp{
+  from{
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to{
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes float{
+  0%, 100%{
+    transform: translateY(0);
+  }
+  50%{
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes shimmer{
+  0%{
+    transform: translateX(-100%);
+  }
+  100%{
+    transform: translateX(100%);
+  }
+}
+
+header{
+  position:fixed;
+  width:100%;
+  top:0;
+  left:0;
+  background: var(--bg-card);
+  backdrop-filter:blur(20px);
+  padding: 20px 80px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  z-index:1000;
+  border-bottom: 1px solid var(--border-color);
+  transition: all 0.3s ease;
+}
+
+.logo{
+  font-size: 28px;
+  font-weight: 800;
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+nav a{
+  margin-left: 35px;
+  text-decoration:none;
+  color: var(--text-secondary);
+  font-weight: 500;
+  font-size: 16px;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+nav a:after{
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--accent-gradient);
+  transition: width 0.3s ease;
+}
+
+nav a:hover{
+  color: var(--accent-color);
+}
+
+nav a:hover:after{
+  width: 100%;
+}
+
+section{
+  padding: 120px 80px;
+  animation: fadeInUp 1s ease-out;
+}
+
+.section-title{
+  font-size: 48px;
+  margin-bottom: 60px;
+  text-align:center;
+  font-weight: 800;
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  min-height:100vh;
+  padding-top: 100px;
+}
+
+.hero-text{
+  max-width: 650px;
+  animation: fadeInUp 1s ease-out 0.2s both;
+}
+
+.hero-text h1{
+  font-size: 64px;
+  line-height: 1.1;
+  margin-bottom: 20px;
+  font-weight: 800;
+}
+
+.hero-text h1 span{
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-text h3{
+  margin: 25px 0;
+  color: var(--accent-color);
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.hero-text p{
+  font-size: 18px;
+  line-height: 1.8;
+  color: var(--text-secondary);
+  margin-bottom: 30px;
+}
+
+.cta-button{
+  display: inline-block;
+  padding: 15px 30px;
+  background: var(--accent-gradient);
+  color: white;
+  text-decoration: none;
+  border-radius: 30px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 10px 30px var(--shadow-medium);
+}
+
+.cta-button:hover{
+  transform: translateY(-3px);
+  box-shadow: 0 15px 40px var(--shadow-heavy);
+}
+
+.social{
+  margin-top: 40px;
+}
+
+.social a{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  background: rgba(99, 102, 241, 0.1);
+  color: var(--accent-color);
+  font-size: 20px;
+  margin-right: 15px;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  border: 1px solid var(--border-color);
+}
+
+.social a:hover{
+  background: var(--accent-color);
+  color: white;
+  transform: translateY(-3px);
+}
+
+.hero-img{
+  width: 350px;
+  height: 350px;
+  border-radius:50%;
+  padding:15px;
+  background: var(--accent-gradient);
+  animation: float 6s ease-in-out infinite;
+  position: relative;
+  animation: fadeInUp 1s ease-out 0.4s both;
+}
+
+.hero-img img{
+  width:100%;
+  height:100%;
+  border-radius:50%;
+  object-fit:cover;
+  border:8px solid var(--bg-primary);
+}
+
+.about{
+  background: var(--bg-card);
+  border-radius: 20px;
+  margin: 40px 80px;
+  padding: 60px;
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 10px 30px var(--shadow-medium);
+}
+
+.about p{
+  font-size:20px;
+  line-height: 1.8;
+  color: var(--text-secondary);
+  text-align: center;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.experience{
+  background: var(--bg-card);
+  border-radius: 20px;
+  margin: 40px 80px;
+  padding: 60px;
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 10px 30px var(--shadow-medium);
+}
+
+.experience-content{
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.experience p{
+  font-size:20px;
+  line-height: 1.8;
+  color: var(--text-secondary);
+  text-align: center;
+  font-weight: 400;
+}
+
+.skills-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(350px,1fr));
+  gap:40px;
+  margin-top: 40px;
+}
+
+.skill-box{
+  background: var(--bg-card);
+  padding: 35px;
+  border-radius: 20px;
+  border: 1px solid var(--border-color);
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 10px 30px var(--shadow-light);
+}
+
+.skill-box:hover{
+  transform: translateY(-10px);
+  border-color: var(--accent-color);
+  box-shadow: 0 20px 40px var(--shadow-heavy);
+}
+
+.skill-box h3{
+  margin-bottom: 25px;
+  color: var(--accent-color);
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.skill-item{
+  margin-bottom: 20px;
+}
+
+.skill-item span{
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.progress{
+  height: 10px;
+  background: var(--border-color);
+  border-radius: 20px;
+  overflow:hidden;
+  position: relative;
+}
+
+.bar{
+  height:100%;
+  background: var(--accent-gradient);
+  border-radius: 20px;
+  position: relative;
+  transition: width 2s ease-in-out;
+}
+
+.bar:after{
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  animation: shimmer 2s infinite;
+}
+
+.contact{
+  background: var(--bg-card);
+  border-radius: 20px;
+  margin: 40px 80px;
+  padding: 60px;
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 10px 30px var(--shadow-medium);
+}
+
+.contact form{
+  max-width: 700px;
+  margin:auto;
+}
+
+.contact input,
+.contact textarea{
+  width:100%;
+  margin-bottom:25px;
+  padding:18px;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  color: var(--text-primary);
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+.contact input:focus,
+.contact textarea:focus{
+  outline: none;
+  border-color: var(--accent-color);
+  box-shadow: 0 0 20px var(--shadow-medium);
+}
+
+.contact button{
+  width:100%;
+  padding:18px;
+  border:none;
+  border-radius: 12px;
+  background: var(--accent-gradient);
+  color:white;
+  font-size:18px;
+  font-weight: 600;
+  cursor:pointer;
+  transition: all 0.3s ease;
+}
+
+.contact button:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 15px 35px var(--shadow-heavy);
+}
+
+footer{
+  text-align:center;
+  padding:40px;
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  border-top: 1px solid var(--border-color);
+  font-size: 16px;
+}
+
+@media (max-width: 768px){
+  header{
+    padding: 15px 20px;
+  }
+  
+  nav a{
+    margin-left: 20px;
+    font-size: 14px;
+  }
+  
+  .hero{
+    flex-direction: column;
+    text-align: center;
+    padding: 120px 20px 60px;
+  }
+  
+  .hero-text h1{
+    font-size: 40px;
+  }
+  
+  .hero-img{
+    width: 250px;
+    height: 250px;
+    margin-top: 40px;
+  }
+  
+  section{
+    padding: 60px 20px;
+  }
+  
+  .about,
+  .experience,
+  .contact{
+    margin: 20px;
+    padding: 40px 20px;
+  }
+  
+  .section-title{
+    font-size: 36px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- Theme Toggle Button -->
+<div class="theme-toggle" onclick="toggleTheme()" title="Toggle Dark/Light Mode">
+  <i class="fas fa-sun"></i>
+  <i class="fas fa-moon"></i>
+</div>
+
+<header>
+  <div class="logo">Portfolio</div>
+  <nav>
+    <a href="#Bio">Bio</a>
+    <a href="#about">About</a>
+    <a href="#experience">Experience</a>
+    <a href="#skills">Skills</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<section class="hero" id="Bio">
+  <div class="hero-text">
+    <h1>Ifat <span>Bhangwar</span></h1>
+    <h3>Web Developer</h3>
+    <p>
+      Passionate about creating secure, scalable, and visually stunning digital experiences.
+      I combine modern web technologies with cybersecurity best practices to build the future of web applications.
+    </p>
+    <a href="#contact" class="cta-button">Get In Touch</a>
+    <div class="social">
+         <a href="https://github.com/account"><i class="fab fa-github"></i></a>
+      <a href="https://www.linkedin.com/in/ifat-aziz-bhangwar-5a7a5132b/?lipi=urn%3Ali%3Apage%3Ad_flagship3_feed%3BgyfbSJEbSMaIoM8%2BDNwEzQ%3D%3D"><i class="fab fa-linkedin"></i></a>
+      <a href="#"><i class="fab fa-twitter"></i></a>
+      <a href="ifatbaloch5@gmail.com"><i class="fas fa-envelope"></i></a>
+    </div>
+  </div>
+  <div class="hero-img">
+    <img src="ifat pic.jpg" alt="Ifat Bhangwar">
+  </div>
+</section>
+
+<section class="about" id="about">
+  <h2 class="section-title">About <span>Me</span></h2>
+  <p>
+    I'm an Information Technology student at QUEST Nawabshah with a strong passion for
+    <strong>Web Development</strong>, <strong>Cybersecurity</strong>, and <strong>UI/UX Design</strong>.
+    My journey in tech is driven by the desire to create innovative digital solutions that are
+    not only visually appealing but also secure and user-friendly.
+    <br><br>
+    When I'm not coding, you'll find me exploring the latest cybersecurity trends,
+    contributing to open-source projects, or designing pixel-perfect user interfaces.
+    My goal is to launch a tech startup that combines cutting-edge technology with
+    meaningful impact.
+  </p>
+</section>
+
+<section class="experience" id="experience">
+  <h2 class="section-title">Professional <span>Experience</span></h2>
+  <div class="experience-content">
+    <p>
+      Throughout my journey in web development, I've successfully completed numerous projects ranging from
+      responsive landing pages to full-stack web applications. My experience includes developing secure
+      authentication systems, implementing RESTful APIs, and creating intuitive user interfaces that
+      prioritize both functionality and aesthetics. I've worked with clients across various industries,
+      delivering solutions that meet their specific business requirements while maintaining clean,
+      scalable code practices. My focus on cybersecurity ensures that every application I build
+      is not only visually stunning but also secure and resilient against modern threats.
+    </p>
+  </div>
+</section>
+
+<section id="skills">
+  <h2 class="section-title">My <span>Skills</span></h2>
+  <div class="skills-grid">
+    <div class="skill-box">
+      <h3><i class="fas fa-code"></i> Frontend Development</h3>
+      <div class="skill-item">
+        <span>HTML5 & CSS3</span>
+        <div class="progress"><div class="bar" style="width:95%"></div></div>
+      </div>
+      <div class="skill-item">
+        <span>JavaScript (ES6+)</span>
+        <div class="progress"><div class="bar" style="width:85%"></div></div>
+      </div>
+      <div class="skill-item">
+        <span>React & Vue.js</span>
+        <div class="progress"><div class="bar" style="width:80%"></div></div>
+      </div>
+      <div class="skill-item">
+        <span>Responsive Design</span>
+        <div class="progress"><div class="bar" style="width:90%"></div></div>
+      </div>
+    </div>
+
+    <div class="skill-box">
+      <h3><i class="fas fa-server"></i> Backend & Tools</h3>
+      <div class="skill-item">
+        <span>Python & Django</span>
+        <div class="progress"><div class="bar" style="width:85%"></div></div>
+      </div>
+      <div class="skill-item">
+        <span>Node.js & Express</span>
+        <div class="progress"><div class="bar" style="width:75%"></div></div>
+      </div>
+      <div class="skill-item">
+        <span>Git & DevOps</span>
+        <div class="progress"><div class="bar" style="width:88%"></div></div>
+      </div>
+      <div class="skill-item">
+        <span>Cybersecurity</span>
+        <div class="progress"><div class="bar" style="width:78%"></div></div>
+      </div>
+    </div>
+
+    <div class="skill-box">
+      <h3><i class="fas fa-palette"></i> Design & Database</h3>
+      <div class="skill-item">
+        <span>Figma & Adobe XD</span>
+        <div class="progress"><div class="bar" style="width:82%"></div></div>
+      </div>
+      <div class="skill-item">
+        <span>MySQL & MongoDB</span>
+        <div class="progress"><div class="bar" style="width:80%"></div></div>
+      </div>
+      <div class="skill-item">
+        <span>UI/UX Principles</span>
+        <div class="progress"><div class="bar" style="width:85%"></div></div>
+      </div>
+      <div class="skill-item">
+        <span>Photoshop</span>
+        <div class="progress"><div class="bar" style="width:75%"></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <h2 class="section-title">Contact <span>Me</span></h2>
+  <form>
+    <input type="text" placeholder="Your Name" required>
+    <input type="email" placeholder="Email Address" required>
+    <input type="text" placeholder="Subject">
+    <textarea rows="5" placeholder="Your Message" required></textarea>
+    <button type="submit">Send Message <i class="fas fa-paper-plane"></i></button>
+  </form>
+</section>
+
+<footer>
+  <p>&copy; <span id="year">2026</span> Ifat Bhangwar. All Rights Reserved.</p>
+  <p>Crafted with <i class="fas fa-heart" style="color: #e11d48;"></i> and <i class="fas fa-code" style="color: var(--accent-color);"></i></p>
+</footer>
+
+<script>
+// Theme Toggle Functionality
+function toggleTheme() {
+  const body = document.body;
+  const currentTheme = body.getAttribute('data-theme');
+  const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  
+  body.setAttribute('data-theme', newTheme);
+  localStorage.setItem('theme', newTheme);
+}
+
+// Load saved theme on page load
+window.addEventListener('DOMContentLoaded', () => {
+  const savedTheme = localStorage.getItem('theme') || 'light';
+  document.body.setAttribute('data-theme', savedTheme);
+});
+
+// Smooth scrolling for navigation links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function (e){
+    e.preventDefault();
+    const target = document.querySelector(this.getAttribute('href'));
+    if (target){
+      target.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
+  });
+});
+
+// Update year automatically
+document.getElementById('year').textContent = new Date().getFullYear();
+
+// Add animation to skill bars when they come into view
+const observerOptions = {
+  threshold: 0.5,
+  rootMargin: '0px 0px -100px 0px'
+};
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting){
+      const bars = entry.target.querySelectorAll('.bar');
+      bars.forEach(bar => {
+        const width = bar.style.width;
+        bar.style.width = '0%';
+        setTimeout(() => {
+          bar.style.width = width;
+        }, 200);
+      });
+    }
+  });
+}, observerOptions);
+
+document.querySelectorAll('.skill-box').forEach(box => {
+  observer.observe(box);
+});
+</script>
+
+</body>
+</html>
